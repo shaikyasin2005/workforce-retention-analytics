@@ -1,452 +1,342 @@
 # Workforce Retention Analytics
 
-A Python-based workforce analytics project that explores employee engagement, tenure, workload, career progression, and synthetic attrition outcomes using SQLite, machine learning, and Streamlit.
+An end-to-end workforce retention analytics application that uses synthetic employee engagement, tenure, role, and workload signals to help prioritize supportive retention conversations. The solution combines a Streamlit dashboard, a SQLite data layer, machine-learning-based risk scoring, validation workflows, and ground-truth outcome exports.
 
-## 1. Project Overview
+> **Important:** This is a demonstration built with synthetic data. Its risk scores are not verified predictions of real employee behaviour and must not be used to make employment decisions.
 
-Workforce Retention Analytics is a synthetic-data analytics project designed to study workforce patterns and demonstrate an end-to-end data analytics and machine learning workflow.
+## Table of Contents
 
-The system maintains relational employee records and longitudinal histories, builds time-aware model datasets, validates data quality, trains a classification model, and presents risk-related insights through an interactive Streamlit dashboard.
+1. [Project Overview](#project-overview)
+2. [Objectives](#objectives)
+3. [Key Features](#key-features)
+4. [Technology Stack](#technology-stack)
+5. [Project Structure](#project-structure)
+6. [Requirements](#requirements)
+7. [Installation and Setup](#installation-and-setup)
+8. [Running the Application](#running-the-application)
+9. [Data and Ground Truth](#data-and-ground-truth)
+10. [Machine Learning and Evaluation](#machine-learning-and-evaluation)
+11. [Validation and Testing](#validation-and-testing)
+12. [Important Scripts](#important-scripts)
+13. [Reproducibility and Traceability](#reproducibility-and-traceability)
+14. [Limitations and Responsible Use](#limitations-and-responsible-use)
+15. [AI Assistance and Prompt History](#ai-assistance-and-prompt-history)
+16. [Future Improvements](#future-improvements)
 
-The dashboard includes employee registration, an Employee Registry, workforce analytics, risk categories, feature-importance analysis, model evaluation metrics, and downloadable CSV reports.
+## Project Overview
 
-The project is intended for educational and demonstration purposes. Its synthetic predictions are not validated estimates of real employee resignations and must not be used as the sole basis for employment decisions.
+Employee retention is influenced by several factors, including engagement, tenure, role, workload, and career development. This project demonstrates how synthetic workforce data can be processed to identify cases that may benefit from a supportive retention conversation.
 
-## 2. Project Objectives
+The application brings together data management, feature preparation, risk scoring, outcome validation, and a dashboard for reviewing results. It is designed to make important decisions, exceptions, and validation results easier to inspect.
 
-- Generate synthetic employee records and historical workforce data.
-- Maintain relational integrity through primary keys, foreign keys, and database constraints.
-- Analyze engagement, tenure, workload, roles, teams, compensation bands, and promotion history.
-- Register employees and maintain initial assignment and compensation history.
-- Build time-aware datasets for a defined scoring date and prediction horizon.
-- Reduce temporal leakage by restricting historical features to information available on or before the scoring date.
-- Train and evaluate a machine learning classification model.
-- Examine feature importance and provide rule-based risk observations.
-- Detect data-quality problems using validation and anomaly tests.
-- Display workforce analytics through an interactive Streamlit dashboard.
-- Preserve historical events and audit records rather than overwriting history.
+The system is a technical demonstration, not a replacement for employee conversations, professional judgement, or a properly validated workforce analytics process.
 
-## 3. Technology Stack
+## Objectives
 
-- **Language:** Python
-- **Database:** SQLite
-- **Data processing:** Pandas
-- **Machine learning:** Scikit-learn
-- **Model serialization:** Joblib
-- **Dashboard:** Streamlit
-- **Data storage:** CSV and JSON
-- **Testing:** Python validation scripts and isolated anomaly fixtures
-- **Version control:** Git and GitHub
+- Analyse synthetic engagement, tenure, role, and workload information.
+- Produce retention-risk scores to help prioritize supportive conversations.
+- Maintain traceability between source data, scoring dates, predictions, and outcome records.
+- Validate outcome records and identify data-quality issues.
+- Detect selected anomalies and potential feature leakage.
+- Document model performance, assumptions, limitations, and verification steps.
+- Provide a locally runnable Streamlit interface.
 
-Matplotlib or Plotly may be used where applicable, depending on the installed project code.
+## Key Features
 
-## 4. Project Structure
+### Workforce retention dashboard
 
-The following tree shows the main project components. It is illustrative rather than a complete inventory of every file in the repository.
+A Streamlit interface for viewing workforce retention analytics and reviewing the information exposed by the application.
+
+### Data management
+
+A SQLite database stores the project's structured data. Python modules provide database access and employee-related operations.
+
+### Model dataset preparation
+
+Dedicated scripts prepare model input data using scoring-date rules for relevant historical signals. Ground-truth outcome fields must remain separate from model input features.
+
+### Risk scoring
+
+A trained machine-learning model generates scores using the configured model pipeline. These scores are demonstration outputs and should not be interpreted as validated real-world probabilities.
+
+### Ground-truth outcome exports
+
+The repository includes CSV and JSON ground-truth exports for inspection and validation. These are separate from the model feature dataset.
+
+### Validation and anomaly checks
+
+The project includes scripts for checking dataset quality, outcome consistency, temporal conditions, potential feature leakage, and selected anomaly scenarios.
+
+## Technology Stack
+
+| Technology | Purpose |
+|---|---|
+| Python | Application logic, data preparation, and validation |
+| Streamlit | Dashboard interface |
+| SQLite | Structured local data storage |
+| pandas | Tabular data processing |
+| scikit-learn | Machine-learning workflows and evaluation |
+| joblib | Model artifact serialization and loading |
+| SQL | Database schema and data queries |
+| Git and GitHub | Version control and source-code hosting |
+
+## Project Structure
 
 ```text
 workforce-retention-analytics/
 ├── app.py
 ├── README.md
+├── ai_prompt_history.md
+├── requirements.txt
+├── .gitignore
 ├── data/
-│   ├── workforce_retention.db
-│   ├── model_dataset.csv
-│   ├── model_dataset_test.csv
-│   └── ground_truth.csv
+│   ├── ground_truth.csv
+│   └── ground_truth.json
 ├── docs/
 │   ├── data_dictionary.md
 │   └── source_manifest.json
-├── models/
-│   ├── retention_model.joblib
-│   ├── evaluation_report.json
-│   └── feature_importance.csv
 ├── sql/
 │   └── schema.sql
 └── src/
     ├── database.py
     ├── employee_service.py
+    ├── build_model_dataset.py
     ├── generate_data.py
     ├── generate_dataset_v2.py
-    ├── generate_outcomes.py
     ├── generate_new_employee_history.py
-    ├── build_model_dataset.py
+    ├── generate_outcomes.py
+    ├── export_ground_truth.py
     ├── train_model.py
-    ├── feature_importance.py
     ├── validate_dataset.py
     ├── check_feature_leakage.py
-    ├── check_scoring_cohort.py
+    ├── check_outcome_quality.py
     ├── check_v2_outcomes.py
     ├── test_anomaly_fixtures.py
     ├── test_model_robustness.py
-    ├── verify_backup.py
-    ├── verify_new_employee.py
-    └── verify_registered_employee.py
+    └── ...other analysis and verification scripts
 ```
 
-Some generated files, scripts, and directories may differ between environments. Consult the actual repository for the current file inventory.
+### Repository artifact policy
 
-## 5. Main Data Entities
+The public repository includes source code, SQL, documentation, validation scripts, and ground-truth exports. The following local artifacts are intentionally excluded:
 
-The relational database contains employee records and related workforce histories, including:
+- The production SQLite database and database backups.
+- Generated model input datasets.
+- Serialized trained-model files.
+- Local inspection reports and temporary test artifacts.
 
-- `Employee`
-- `Role`
-- `Team`
-- `TenureSnapshot`
-- `EngagementSurvey`
-- `WorkloadSnapshot`
-- `CompensationBand`
-- `EmployeeAssignmentHistory`
-- `EmployeeCompensationHistory`
-- `PromotionHistory`
-- `AttritionOutcome`
-- `AuditLog`
+These exclusions keep the repository focused on source code and supporting documentation. A fresh clone will not automatically contain the excluded database, generated datasets, or trained model. Prepare them using the project's data-generation and model-building workflow before running any feature that depends on them.
 
-Refer to `sql/schema.sql` for database schema definitions and `docs/data_dictionary.md` for the documented data fields.
+The ground-truth exports contain synthetic demonstration records. Do not add real employee data, confidential information, credentials, or other sensitive information to the public repository.
 
-## 6. Installation and Setup
+## Requirements
 
-### Prerequisites
+- Python installed on your computer.
+- Git, if you want to clone and version the project.
+- Internet access to install Python dependencies.
+- A local copy of the project.
+- Local database and model artifacts for application features that require them.
 
-- Python installed on your system.
-- A terminal such as PowerShell.
-- VS Code or another Python editor.
-- The project files and required data/model artifacts.
+The project dependencies are listed in `requirements.txt`.
 
-Use a Python version compatible with all installed project dependencies. Python 3.14 may work if compatible package versions are available.
+## Installation and Setup
 
-### Clone the repository
+### 1. Clone the repository
 
-If you are setting up the project from GitHub:
+Open PowerShell or a terminal:
 
 ```powershell
-git clone <YOUR_GITHUB_REPOSITORY_URL>
+git clone https://github.com/shaikyasin2005/workforce-retention-analytics.git
 cd workforce-retention-analytics
 ```
 
-Replace the placeholder with your actual repository URL.
-
-If you already have the project locally, open the existing project directory instead.
-
-### Create a virtual environment
-
-From the project root:
+### 2. Create a virtual environment
 
 ```powershell
 python -m venv .venv
 ```
 
-Activate it in PowerShell:
+Activate it on Windows PowerShell:
 
 ```powershell
 .\.venv\Scripts\Activate.ps1
 ```
 
-If PowerShell blocks activation, use the appropriate environment activation method for your system or run the environment's Python executable directly.
+If PowerShell prevents activation, you can use the Python executable inside the environment directly or follow Microsoft's guidance for your machine's execution policy. Do not change system security settings unnecessarily.
 
-### Install dependencies
-
-Install the core packages used by the application:
+### 3. Install dependencies
 
 ```powershell
-python -m pip install pandas scikit-learn joblib streamlit
+python -m pip install --upgrade pip
+python -m pip install -r requirements.txt
 ```
 
-Install any additional dependencies imported by the scripts you intend to run.
+### 4. Prepare local data and model artifacts
 
-For a reproducible setup, maintain a tested dependency file such as `requirements.txt` rather than relying on unpinned package versions.
+The production database, generated model datasets, and trained model binaries are not tracked in Git. Before using features that require them, follow the project's data-generation, dataset-building, and model-training scripts in `src/`.
 
-## 7. Run the Streamlit Dashboard
+Review each script before running it, particularly if it writes to an existing database or overwrites model artifacts. Use a separate test database when testing data-generation or registration workflows. Do not overwrite valuable local artifacts without making a backup.
 
-From the project root:
+The ground-truth exports already committed under `data/` are supporting outcome records; they do not replace the application's operational database or the model's input dataset.
+
+## Running the Application
+
+From the project root, with dependencies installed and required local artifacts prepared, run:
 
 ```powershell
 python -m streamlit run app.py
 ```
 
-Open the local URL displayed in the terminal. Streamlit commonly uses `http://localhost:8501`, but the port may differ if it is already occupied.
+Streamlit normally opens the application in your browser. If it does not, follow the local URL displayed in the terminal.
 
-The dashboard includes:
+To stop the server, press `Ctrl+C` in the terminal running Streamlit.
 
-- Workforce retention analytics.
-- Risk-category and scoring-date filters.
-- Prediction horizon selection.
-- Employee risk metrics and charts.
-- Model evaluation results.
-- Feature-importance visualization.
-- Employee risk records and CSV downloads.
-- An Add Employee form.
-- An Employee Registry.
+**Verification:** The dashboard was launched successfully in the development environment. A clean clone still needs its excluded local artifacts prepared before all data-dependent features can be verified.
 
-The dashboard requires the configured dataset, model, and other referenced files to be available.
+## Data and Ground Truth
 
-## 8. Employee Registration and Registry
+The project separates model input data from ground-truth outcomes.
 
-The dashboard provides an employee registration form backed by `src/employee_service.py`.
+### Model input data
 
-Users can:
+Model features are prepared from historical workforce signals according to the configured scoring date. Relevant source records should be limited to information available at or before that scoring date.
 
-- Select an employment start date.
-- Choose an initial role.
-- Choose an initial team.
-- Select a compensation band when applicable.
-- Register a new employee in the database.
+The dataset-building workflow includes temporal filters for signals such as surveys, workload periods, assignments, and promotion events. These filters are intended to reduce the risk of using information from the future.
 
-The registration service creates the employee record and an initial assignment-history record. When a compensation band is supplied, it also creates the corresponding initial compensation-history record.
+### Ground-truth outcomes
 
-The registration operation uses a database transaction so the related inserts can be committed together or rolled back if an error occurs.
+The public ground-truth exports contain **19,110 outcome records** across two label versions:
 
-### Employee Registry
+- `data/ground_truth.csv`
+- `data/ground_truth.json`
 
-The Employee Registry displays employees registered in the database, including employees who are not eligible for the current historical model dataset.
+The exports include outcome identifiers, employee identifiers, scoring dates, prediction horizons, outcome statuses, label versions, validation information, and related metadata.
 
-It includes information such as:
+The current exports were checked and reported **zero validation issues** in their recorded validation fields. This is a result of the implemented checks, not a guarantee that every possible data-quality problem has been eliminated.
 
-- Employee ID.
-- Employment start date and status.
-- Role and team.
-- Counts of tenure snapshots, engagement surveys, and workload snapshots.
-- Whether the employee ID appears in the current model dataset.
+Some fields, such as a termination date for a record with no observed attrition, may be empty by design. Interpret missing values according to the data dictionary and outcome rules.
 
-The registry supports employee-ID searching and CSV export.
+### Important separation rule
 
-### Registration limitations
+**Never use ground-truth outcomes, attrition labels, termination dates, or other information unavailable at scoring time as model input features.** Outcome data is intended for evaluation and traceability, not for leaking the answer into the prediction process.
 
-Registering an employee does not automatically generate tenure snapshots, engagement surveys, workload snapshots, attrition outcomes, or a model prediction.
+See [`docs/data_dictionary.md`](docs/data_dictionary.md) for field definitions.
 
-An employee whose start date is after a historical scoring date should not be included in that historical scoring cohort.
+## Machine Learning and Evaluation
 
-The registration workflow was tested using an isolated temporary database copy. A separate read-only verification confirmed that `EMP-010003` had one assignment-history record and one compensation-history record. The isolated registration test did not modify the production database.
+The project includes a model-training workflow and a model robustness check.
 
-## 9. Build the Model Dataset
+The development evaluation recorded the following results:
 
-The project contains scripts for constructing a model dataset from workforce histories and attrition outcomes.
-
-The current dataset configuration uses:
-
-| Setting | Value |
-|---|---|
-| Scoring date | `2026-07-30` |
-| Prediction horizon | 90 days |
-| Label version | `v2` |
-| Dataset rows | 9,555 |
-| Attrition labels | 956 |
-| No-attrition labels | 8,599 |
-
-These values describe the current dataset and may change if the source data or generation parameters change.
-
-A test build can be performed using the supported options of the dataset builder. For example, if the script exposes the following arguments:
-
-```powershell
-python src/build_model_dataset.py --scoring-date 2026-07-30 --output data/model_dataset_test.csv
-```
-
-Confirm the script's supported command-line arguments before running this example. Do not assume that every script version supports the same options.
-
-**Important:** Build into a test output path first. Validate the resulting data before replacing the production dataset.
-
-### Temporal considerations
-
-The dataset builder is designed to select historical features available on or before the scoring date.
-
-The existing date audit reported:
-
-- 9,555 dataset rows.
-- Zero rows dated after the expected scoring date.
-- Zero rows with unexpected scoring dates.
-
-These checks validate the dataset's scoring dates. They do not, by themselves, prove that every feature was derived from a valid historical source record. Source-record date validation is a separate requirement.
-
-## 10. Train and Evaluate the Model
-
-The project uses a Random Forest classifier with preprocessing for numeric and categorical features.
-
-The training script is:
-
-```powershell
-python src/train_model.py
-```
-
-Before running it, verify the input dataset and output paths configured in the script.
-
-Training may overwrite model artifacts or evaluation reports at the configured locations. Preserve backups and validate the intended dataset before retraining the production model.
-
-The dashboard reads the configured model and evaluation-report artifacts to display risk scores and performance metrics.
-
-## 11. Model Evaluation and Robustness Results
-
-The current model robustness diagnostic reported the following results:
-
-| Metric | Result |
+| Evaluation | Result |
 |---|---:|
-| Dataset rows | 9,555 |
-| Training rows | 7,644 |
-| Testing rows | 1,911 |
-| Original-label test ROC-AUC | 0.9755 |
-| Shuffled-label test ROC-AUC | 0.5146 |
+| ROC-AUC on the configured synthetic evaluation | 0.9755 |
+| ROC-AUC with shuffled labels in a robustness check | 0.5146 |
 
-The shuffled-label ROC-AUC is close to the random-ranking baseline of 0.50. This is a useful diagnostic for checking whether the evaluation process behaves as expected when labels are randomized.
+ROC-AUC measures how well a model ranks positive cases above negative cases across classification thresholds. A value near 0.5 indicates performance close to random ranking for that test.
 
-However, the high original-label ROC-AUC must be interpreted cautiously.
+### How to interpret these results
 
-The attrition labels in this project are synthetic and are generated using rules related to workforce risk factors. As a result, the model may learn relationships created by the label-generation process rather than generalizable patterns of real employee resignations.
+The high ROC-AUC must be interpreted cautiously because the synthetic outcome labels were generated using rules related to risk features. This can create a strong relationship between input features and labels without demonstrating that the model will generalize to real employees.
 
-These results describe performance on the project's synthetic dataset only. They are not evidence of equivalent performance on real workforce data.
+The shuffled-label result is a useful sanity check, but it does not prove that the entire pipeline is free of leakage or that performance will transfer to another dataset.
 
-## 12. Data Quality and Validation
+Before any real-world use, evaluation would require independently collected and appropriately governed data, a leakage-resistant temporal holdout, calibration and threshold analysis, subgroup and fairness checks, and review by relevant domain experts.
 
-The repository includes scripts for checking database consistency, scoring dates, outcome records, and selected anomaly conditions.
+## Validation and Testing
 
-Run these commands from the project root when the corresponding scripts are present:
+The project contains scripts for checking data integrity and selected system behaviours.
+
+Run validation scripts only after preparing the local database and other artifacts required by each script. Check each script's source and dependencies first; some scripts inspect local database or model files that are not included in the public repository.
+
+Examples of validation scripts include:
 
 ```powershell
 python src/validate_dataset.py
-python src/check_feature_leakage.py
-python src/check_scoring_cohort.py
 python src/check_v2_outcomes.py
 python src/test_anomaly_fixtures.py
-```
-
-Additional verification utilities include:
-
-```powershell
-python src/verify_backup.py
 python src/test_model_robustness.py
-python src/verify_new_employee.py
-python src/verify_registered_employee.py
 ```
 
-These scripts serve different purposes. Review their output and source code to understand the scope of each check.
+These are separate checks, and they may have different prerequisites. Do not interpret a command as passed unless it has actually completed successfully in your environment.
 
-### Validation results observed during development
+### Previously recorded development checks
 
-The database validation script reported:
+The development checks completed for this project reported:
 
-| Validation | Result |
-|---|---:|
-| Employees | 10,003 |
-| Tenure snapshots | 183,624 |
-| Engagement surveys | 183,624 |
-| Workload snapshots | 183,627 |
-| Promotion events | 1,722 |
-| Attrition outcomes | 19,110 |
-| Invalid outcome date windows | 0 |
-| Invalid observed attrition labels | 0 |
-| Invalid observed no-attrition labels | 0 |
-| Duplicate outcome keys | 0 |
-| Database integrity | `ok` |
-| Foreign-key violations | 0 |
+- SQLite integrity check: `ok`.
+- Foreign-key violations: 0.
+- Invalid outcome windows: 0.
+- Duplicate outcome keys: 0.
+- Isolated anomaly fixtures: 6 of 6 passed.
+- Version 2 outcome consistency issues: 0.
+- New-employee registration test completed using a temporary database without modifying the production database.
 
-The anomaly-fixture test reported that six isolated anomaly cases were detected:
+These results describe the checks run during development. Re-run relevant checks in the environment used for evaluation and record any differences.
 
-- Missing survey.
-- High workload.
-- Invalid temporal window.
-- Future-feature leakage.
-- Invalid attrition label.
-- Invalid recommendation records.
+## Important Scripts
 
-The test also reported that the main database was not modified.
+| Script | Purpose |
+|---|---|
+| `src/database.py` | Database access utilities |
+| `src/employee_service.py` | Employee-related operations |
+| `src/generate_data.py` | Synthetic data generation |
+| `src/build_model_dataset.py` | Model dataset preparation |
+| `src/generate_dataset_v2.py` | Version 2 dataset workflow |
+| `src/generate_outcomes.py` | Outcome generation |
+| `src/export_ground_truth.py` | Ground-truth export |
+| `src/train_model.py` | Model training |
+| `src/validate_dataset.py` | Dataset validation |
+| `src/check_feature_leakage.py` | Checks related to feature leakage |
+| `src/check_outcome_quality.py` | Outcome quality checks |
+| `src/check_v2_outcomes.py` | Version 2 outcome consistency checks |
+| `src/test_anomaly_fixtures.py` | Isolated anomaly validation scenarios |
+| `src/test_model_robustness.py` | Model robustness evaluation |
 
-These results describe the checks performed. They do not establish that every possible data-quality problem or leakage pathway has been eliminated.
+For exact arguments, configuration, and side effects, consult the relevant script. Do not assume that a script supports command-line flags unless they are implemented in its source.
 
-## 13. Reproducibility
+## Reproducibility and Traceability
 
-The project uses the configured random seed `20261022` in relevant synthetic-data and model-training workflows.
+The project supports traceability through source code, SQL schema, data dictionary, ground-truth exports, and a source manifest.
 
-For more reproducible experiments:
+- `sql/schema.sql` describes the database schema.
+- `docs/data_dictionary.md` documents relevant fields.
+- `docs/source_manifest.json` records checksums for the source files covered by the manifest.
+- `ai_prompt_history.md` documents AI assistance and prompt history.
+- Validation scripts provide repeatable checks for selected data-quality and model concerns.
 
-- Record the exact script and command used to generate each artifact.
-- Keep scoring date, prediction horizon, and label version fixed when comparing runs.
-- Record package versions and the Python environment.
-- Preserve the input dataset and relevant configuration.
-- Validate output counts, labels, constraints, and date boundaries.
-- Compare checksums when verifying deterministic outputs.
+For a reproducible run, record the Python version, installed dependency versions, dataset-generation settings, scoring date, label version, model configuration, and validation results.
 
-A fixed seed in one script does not guarantee that every project artifact is deterministic. Each generator and processing step should be tested independently.
+The source manifest only verifies the files included in that manifest; it does not automatically verify excluded database and model artifacts.
 
-## 14. Backup and Data Integrity
+## Limitations and Responsible Use
 
-The project includes a backup-verification utility.
+1. **Synthetic data:** The data does not represent a validated sample of a real workforce.
+2. **Model generalization:** Synthetic evaluation results are not evidence of real-world predictive performance.
+3. **Human oversight:** Risk scores should only support supportive, voluntary conversations—not disciplinary action, hiring, firing, promotion, or compensation decisions.
+4. **Data leakage:** Features must be limited to information available at the scoring date. Outcome fields must remain separate from model inputs.
+5. **Fairness and privacy:** Real-world deployment would require appropriate authorization, privacy controls, fairness evaluation, and domain review.
+6. **Local artifacts:** The public repository excludes operational databases and model binaries. Data-dependent features require local preparation.
+7. **Validation scope:** Passing the implemented checks does not establish that every possible error, security issue, or model weakness has been ruled out.
 
-A successful backup check should be interpreted according to what the script actually verifies. Table counts and employee counts alone do not prove that a backup is a complete or current copy of the production database.
+## AI Assistance and Prompt History
 
-A robust backup procedure should preserve a consistent database copy, verify SQLite integrity and foreign-key constraints where appropriate, and compare relevant schema and record counts.
+AI tools were used as part of the development and documentation workflow. The developer remains responsible for reviewing the implementation, understanding design choices, verifying results, and documenting limitations.
 
-Keep backup files separate from production files, and avoid overwriting the only known-good backup during testing.
+See [`ai_prompt_history.md`](ai_prompt_history.md) for the prompt history and the documented use of AI assistance. The history should reflect the prompts actually submitted and should distinguish verbatim prompts from summaries.
 
-## 15. Synthetic Data and Model Limitations
+## Future Improvements
 
-All workforce records and attrition labels used by this project are synthetic.
+- Add a documented, repeatable setup workflow for generating local artifacts from a clean clone.
+- Expand automated tests for database operations, application workflows, and edge cases.
+- Add stronger temporal validation and independently held-out evaluation data.
+- Evaluate model calibration, decision thresholds, and subgroup performance.
+- Improve configuration management and application-level observability.
+- Add explicit data-quality rules for missing and inconsistent outcome metadata.
+- Improve the reproducibility of model training and evaluation reports.
 
-Consequently:
+## Repository
 
-- Synthetic labels do not establish real-world employee attrition behavior.
-- High evaluation metrics may reflect the label-generation rules.
-- Synthetic performance does not establish predictive accuracy on real employee data.
-- Missing engagement surveys should not automatically be interpreted as negative engagement.
-- High workload does not guarantee attrition.
-- Feature importance does not establish causation.
-- Rule-based observations are not direct explanations of the model's internal calculations.
-- A historical dataset is not automatically suitable for predicting outcomes for newly registered employees.
+GitHub: https://github.com/shaikyasin2005/workforce-retention-analytics
 
-Real-world use would require appropriate authorized data, rigorous temporal validation, privacy review, fairness assessment, calibration, monitoring, and independent evaluation.
-
-## 16. Privacy and Responsible Use
-
-The project is designed for educational and demonstration purposes.
-
-Responsible-use principles include:
-
-- Use synthetic or appropriately authorized data.
-- Restrict access to employee-level records.
-- Avoid sensitive personal attributes and inappropriate proxy variables.
-- Explain the limitations of model outputs.
-- Require human review before any intervention.
-- Avoid using risk scores as the sole basis for employment decisions.
-- Preserve intervention history and outcomes as explicit records where applicable.
-- Apply appropriate access controls and retention policies before using real workforce information.
-
-## 17. Documentation and Supporting Files
-
-The repository may include:
-
-- `docs/data_dictionary.md` — documented data fields and their meanings.
-- `sql/schema.sql` — database tables, relationships, and constraints.
-- `docs/source_manifest.json` — source-file manifest and checksums.
-- Ground-truth exports — exported outcome records for inspection and validation.
-- Evaluation reports — model metrics and related diagnostics.
-
-A manifest or ground-truth export is useful for traceability, but neither independently proves that synthetic labels represent real-world outcomes.
-
-## 18. Future Improvements
-
-Potential improvements include:
-
-- End-to-end reproducibility tests.
-- Temporal evaluation across multiple scoring dates.
-- More comprehensive source-record cutoff validation.
-- Stronger separation between feature construction and outcome generation.
-- A dedicated employee-history workflow for new registrations.
-- Explicit intervention tracking and outcome analysis.
-- Better automated test coverage for registration and dashboard workflows.
-- Dependency pinning and environment documentation.
-- Backup restoration tests.
-- Improved dashboard accessibility and usability.
-- Evaluation on appropriately authorized real-world data before any real-world predictive claims.
-
-## 19. Project Status
-
-The project currently includes:
-
-- A relational SQLite database.
-- Synthetic workforce histories and outcomes.
-- Time-aware model-dataset construction.
-- Data-quality validation utilities.
-- An employee registration service and Employee Registry.
-- A machine learning training and evaluation workflow.
-- A Streamlit analytics dashboard.
-- Feature-importance and risk-observation displays.
-- Isolated anomaly tests and model robustness diagnostics.
-
-The project demonstrates a complete educational workflow for workforce analytics, from relational data management through model evaluation and dashboard presentation. Its synthetic-data limitations remain central to interpreting the results responsibly.
+This project is a demonstration of workforce analytics, data validation, and machine-learning workflows using synthetic data.
