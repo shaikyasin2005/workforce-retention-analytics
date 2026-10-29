@@ -1,0 +1,39 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.env
+.env.*
+
+# IDE and operating system
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Temporary files and logs
+*.tmp
+*.log
+
+# Local databases and backups
+data/*.db
+data/*.db-*
+data/*.sqlite
+data/*.sqlite3
+
+# Generated model datasets (regenerate locally)
+data/model_dataset*.csv
+
+# Generated model artifacts and reports
+models/*.joblib
+models/*.pkl
+models/evaluation_report*.json
+models/feature_importance.csv
+
+# Temporary test artifacts
+retention_test_*/
+
+# Local inspection and validation outputs
+database_inspection.txt
+schema_details_output.txt
+validation_report.txt

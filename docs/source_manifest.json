@@ -1,0 +1,218 @@
+{
+  "manifest_version": "1.0",
+  "generated_at_utc": "2026-10-29T08:14:30.940093+00:00",
+  "project": "workforce-retention-analytics",
+  "files_included": 41,
+  "excluded": [
+    "Virtual environments and Git metadata",
+    "Generated data and model artifacts",
+    "The manifest itself"
+  ],
+  "files": [
+    {
+      "path": "app.py",
+      "size_bytes": 24611,
+      "sha256": "74be6c9d104d36f2cd613bab3e45be9534d326dfa963b4126d50ba0422fe1c4c"
+    },
+    {
+      "path": "database_inspection.txt",
+      "size_bytes": 5894,
+      "sha256": "f06b282f606042bb6197b661ed0af73468bf7cd79aebbaf963ce04e9ebf7f996"
+    },
+    {
+      "path": "docs/data_dictionary.md",
+      "size_bytes": 21865,
+      "sha256": "0e44d92059276f793b928111f79523c0680f0937fdb043fc5f3fae5e9ab713f2"
+    },
+    {
+      "path": "README.md",
+      "size_bytes": 7468,
+      "sha256": "a14dffc63c47ec6d039aeea84bf968db8ec22a6a6a55c1560e26a8630aa8c281"
+    },
+    {
+      "path": "schema_details_output.txt",
+      "size_bytes": 53232,
+      "sha256": "4e38b72630769681fd5f6136d0c5f561117511e34685beed948482d5ca1a2849"
+    },
+    {
+      "path": "sql/schema.sql",
+      "size_bytes": 13841,
+      "sha256": "735b4adea7a42db7cc69fd809f344a82dd8c84f7469d9babf6dc5ab4572090b7"
+    },
+    {
+      "path": "src/analyze_attrition_patterns.py",
+      "size_bytes": 1190,
+      "sha256": "1b4650933e5ed9afd809d0aea87a18c0a1dbb4e70a4428c18040ac956164d55e"
+    },
+    {
+      "path": "src/build_model_dataset.py",
+      "size_bytes": 14017,
+      "sha256": "87a4bd5a6b7adf2d03ce96df026b56e7ecea45ef0cdf50e2fc8a02bd979c26e0"
+    },
+    {
+      "path": "src/check_available_scoring_dates.py",
+      "size_bytes": 1205,
+      "sha256": "28bd1026210fc118fed01884ba2af2ce7466cd342b9c9e764be80f0176cb9d02"
+    },
+    {
+      "path": "src/check_database.py",
+      "size_bytes": 483,
+      "sha256": "9c2b2c457f61b1cbff2dd10e58dc6743ea628a972e331bb9aa32f1b7cb174319"
+    },
+    {
+      "path": "src/check_employee.py",
+      "size_bytes": 611,
+      "sha256": "3a975719b3235009d0cc80f2d00489321970ef9e70c39fdb10fe8491a4baec19"
+    },
+    {
+      "path": "src/check_employee_counts.py",
+      "size_bytes": 1208,
+      "sha256": "eb4c09792e8977c250334786ae070896100ac39ffb7b321e1377c29c52da7f6a"
+    },
+    {
+      "path": "src/check_feature_leakage.py",
+      "size_bytes": 2638,
+      "sha256": "500943892c5d3a70a362174f4a896259f27da8a48f93458e8e373e0210367a7a"
+    },
+    {
+      "path": "src/check_feature_patterns.py",
+      "size_bytes": 1740,
+      "sha256": "f7323192c363cbdcc30cc129868b9cd9f71eb6dc4a3d1c1553405a9e36548843"
+    },
+    {
+      "path": "src/check_history_coverage.py",
+      "size_bytes": 799,
+      "sha256": "489afc05d3f639bd0a7cf7214642ead515f79059ba4d8fcd125353763607983f"
+    },
+    {
+      "path": "src/check_new_employee_history.py",
+      "size_bytes": 968,
+      "sha256": "1436d9e9b6d4a209ae6f004c39ff86b58f3afbcd877cf75f98c353813d21e289"
+    },
+    {
+      "path": "src/check_outcome_dates.py",
+      "size_bytes": 599,
+      "sha256": "8b62994a0ad608ac1cb72e9a658e2a872d4124764016e77cf5eb3975c0fdb563"
+    },
+    {
+      "path": "src/check_outcome_quality.py",
+      "size_bytes": 1313,
+      "sha256": "cd9e732eaea93db178f14636435102f754b5e2810ec10ae002b1ab31f5862a2b"
+    },
+    {
+      "path": "src/check_prediction_scores.py",
+      "size_bytes": 1697,
+      "sha256": "3bdeea766fb7050a6cc2b034cd66b43813efa6dfb519cbf3c3244a87cd0ef542"
+    },
+    {
+      "path": "src/check_promotions.py",
+      "size_bytes": 740,
+      "sha256": "716748fca4b12f5d228ae039f9353f2b153d4fdb480713d15bb4c21c0cbbd96a"
+    },
+    {
+      "path": "src/check_scoring_cohort.py",
+      "size_bytes": 1668,
+      "sha256": "e891096e24f70e6c1d0c121d34d054420c42e945d1a40fc60b2ccd92745031ff"
+    },
+    {
+      "path": "src/check_snapshot_dates.py",
+      "size_bytes": 478,
+      "sha256": "1a73a87ccdd544df3e9aa26272b331980b09201c2cbe7f9a9521793f939803ce"
+    },
+    {
+      "path": "src/create_source_manifest.py",
+      "size_bytes": 2203,
+      "sha256": "b75f677fe8e3b9ecc916bc335bae2febd4c9e2ec18701edd86165be21123320e"
+    },
+    {
+      "path": "src/database.py",
+      "size_bytes": 1402,
+      "sha256": "c56d1d5ceb093db8215536adfc40c896719c88c01ee2cbbe91ef2e81951defad"
+    },
+    {
+      "path": "src/employee_service.py",
+      "size_bytes": 5123,
+      "sha256": "33864789b7df68a927dd5e39e48c64c797676ce6d114cc9b63124a805674f9ab"
+    },
+    {
+      "path": "src/feature_importance.py",
+      "size_bytes": 1134,
+      "sha256": "cc4f9f9eaac26366ce9b292f7b17457df23b2b7feb8d73294f74748efb6cc493"
+    },
+    {
+      "path": "src/generate_data.py",
+      "size_bytes": 6789,
+      "sha256": "eef3dbbdff3d4af0b5719189d3a3330557a82bcb62cf31c17056b9b71337e69b"
+    },
+    {
+      "path": "src/generate_dataset_v2.py",
+      "size_bytes": 18072,
+      "sha256": "4af84772bd2e89e6715b5022c5269b1cb43d106ad48797d0850979a42542765e"
+    },
+    {
+      "path": "src/generate_new_employee_history.py",
+      "size_bytes": 13799,
+      "sha256": "74fbd5b02ea75625d0f28dd4932d6e61a9bdc45b7e30abbe6d539e7ab8b513b4"
+    },
+    {
+      "path": "src/generate_outcomes.py",
+      "size_bytes": 8699,
+      "sha256": "704ae0d708b1e164976ac2000a996cd76c76ee3781a4e5a8dfdd8cfa11d9d6f4"
+    },
+    {
+      "path": "src/inspect_database.py",
+      "size_bytes": 1014,
+      "sha256": "b793dea0c45778b6d663509e0bb07905cb463ba7e0ce5d67240da2f469cf7145"
+    },
+    {
+      "path": "src/inspect_schema_details.py",
+      "size_bytes": 1876,
+      "sha256": "9eb4ce80b0d67c78a95f54ba1c40c82dc96b17dd54c12a9677716453ae6a4bfb"
+    },
+    {
+      "path": "src/test_anomaly_fixtures.py",
+      "size_bytes": 5896,
+      "sha256": "a74ebb591f364f867929b5b88be05f78a2dcab7f2603cdcc231faddab2aafacd"
+    },
+    {
+      "path": "src/test_model_robustness.py",
+      "size_bytes": 2662,
+      "sha256": "09fd226c26de8092de024f084ffc05b8e3841d169ddc3ab96e9f55684a515dfc"
+    },
+    {
+      "path": "src/train_model.py",
+      "size_bytes": 9958,
+      "sha256": "aa470a920976bda4bdfb921afd39ff13fa2bd5bcdcc0c7cfbfe60e89882a9ed3"
+    },
+    {
+      "path": "src/validate_dataset.py",
+      "size_bytes": 2686,
+      "sha256": "7c620d9e41520c6742b449fd66402ec8d424463264df8a86fbac164b391f6b5c"
+    },
+    {
+      "path": "src/validation_report.py",
+      "size_bytes": 3136,
+      "sha256": "9cd7a0cc585240c62fc54ebfa9773867ceb4efbd81daf9d94c5c1e8a07dbacfe"
+    },
+    {
+      "path": "src/verify_backup.py",
+      "size_bytes": 561,
+      "sha256": "d3a6aebf7146e5548cda91db68712d5168c03b0cacf3ba0a7b98173850a0097f"
+    },
+    {
+      "path": "src/verify_history.py",
+      "size_bytes": 1842,
+      "sha256": "bbae8946fc1704ff885e95b2850e5fb32fd8e299d78a7f22f516538e206bfec2"
+    },
+    {
+      "path": "src/verify_new_employee.py",
+      "size_bytes": 1152,
+      "sha256": "e83cf5e1fcc9fc476b87b72517823b1574053b7ab9634e4159af58a206b4c58e"
+    },
+    {
+      "path": "validation_report.txt",
+      "size_bytes": 543,
+      "sha256": "6e03c43017008da7db2ec68d66a3645ce803a27c58a150a6c401f43e9dc7df07"
+    }
+  ]
+}
